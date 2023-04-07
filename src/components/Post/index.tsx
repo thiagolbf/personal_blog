@@ -1,46 +1,82 @@
 import styles from "./Post.module.css";
 
+import { useState } from "react";
+import { format, formatDistanceToNow } from "date-fns";
+import ptBR from "date-fns/locale/pt-BR";
 import { Comment } from "../Comment";
 import { Avatar } from "../Avatar";
 
-export const Post = () => {
+interface PostProps {
+  author: {
+    avatarUrl: string;
+    name: string;
+    role: string;
+  };
+  content: Content[];
+  publishAt: Date;
+}
+
+interface Content {
+  type: string;
+  content: string;
+}
+
+export const Post = ({ author, content, publishAt }: PostProps) => {
+  // const publishedDateFormated = new Intl.DateTimeFormat("pt-Br", {
+  //   day: "2-digit",
+  //   month: "long",
+  //   hour: "2-digit",
+  //   minute: "2-digit",
+  // }).format(publishAt);
+
+  const [comments, setComments] = useState([1, 2]);
+
+  const publishedDateFormated = format(publishAt, "d 'de' LLLL 'às' HH:mm'h'", {
+    locale: ptBR,
+  });
+
+  const publishedDateRelativeToNow = formatDistanceToNow(publishAt, {
+    locale: ptBR,
+    addSuffix: true,
+  });
+
+  const handleCreateNewComment = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    setComments([...comments, comments.length]);
+  };
+
   return (
     <article className={styles.post}>
       <header>
         <div className={styles.author}>
-          <Avatar src="https://github.com/thiagolbf.png" />
+          <Avatar src={author.avatarUrl} />
           <div className={styles.authorInfo}>
-            <strong>Thiago Barcelos</strong>
-            <span>Engineering and Web Developer</span>
+            <strong>{author.name}</strong>
+            <span>{author.role}</span>
           </div>
         </div>
 
-        <time title="03 de Abril às 06:16h" dateTime="2023-04-03">
-          Publico há 1h
+        <time title={publishedDateFormated} dateTime={publishAt.toISOString()}>
+          {publishedDateRelativeToNow}
         </time>
       </header>
 
       <div className={styles.content}>
-        <p>Fala galeraa 👋</p>
-
-        <p>
-          Acabei de subir mais um projeto no meu portifa. É um projeto que fiz
-          no NLW Return, evento da Rocketseat. O nome do projeto é DoctorCare 🚀
-        </p>
-
-        <p>
-          {" "}
-          <a href="">github.com/thiagolbf</a>
-        </p>
-
-        <p>
-          {" "}
-          <a href=""> #novoprojeto</a> <a href="">#nlw</a>{" "}
-          <a href="">#rocketseat</a>
-        </p>
+        {content.map((line, index) => {
+          if (line.type === "paragraph") {
+            return <p key={index}>{line.content}</p>;
+          } else if (line.type === "link") {
+            return (
+              <p key={index}>
+                <a href="#">{line.content}</a>
+              </p>
+            );
+          }
+        })}
       </div>
 
-      <form className={styles.commentForm}>
+      <form onSubmit={handleCreateNewComment} className={styles.commentForm}>
         <strong>Deixe seu feedback</strong>
 
         <textarea placeholder="Deixe um comentário"></textarea>
@@ -49,8 +85,9 @@ export const Post = () => {
         </footer>
       </form>
       <div className={styles.commentList}>
-        <Comment />
-        <Comment />
+        {comments.map((value) => {
+          return <Comment />;
+        })}
       </div>
     </article>
   );
