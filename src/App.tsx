@@ -51,7 +51,7 @@ function App() {
       <div className={styles.wrapper}>
         <Sidebar />
         <main>
-          {posts.map((value) => {
+          {posts.map((value, index) => {
             return (
               <Post
                 key={value.id}
