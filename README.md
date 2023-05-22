@@ -4,11 +4,11 @@
 
 ### Tecnologias utilizadas;
 
-- React.JS
-- Typescript
+- React.JS;
+- Typescript;
 - CSS modules;
-- Phosphor_Icons
-- Date_fns
+- Phosphor_Icons;
+- Date_fns;
 
 ### Link para acessar o projeto:
 
