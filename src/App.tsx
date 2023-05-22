@@ -17,8 +17,7 @@ const posts = [
       { type: "paragraph", content: "Fala galeraa 👋" },
       {
         type: "paragraph",
-        content:
-          "Acabei de subir mais um projeto no meu portifa. É um projeto que fiz      no NLW Return, evento da Rocketseat. O nome do projeto é DoctorCare 🚀",
+        content: "Página estática, praticando posicionamento com CSS puro. ",
       },
       { type: "link", content: "github.com/thiagolbf" },
     ],
