@@ -1,6 +1,6 @@
 # BLOG
 
-#### Projeto (Front-End) de um blog estático, com funcionalidade para "aplaudir" (curtir) e inserir/deletar comentários.
+#### Projeto (Front-End) de um blog estático, com funcionalidades para "aplaudir" (curtir) e inserir/deletar comentários.
 
 ### Tecnologias utilizadas;
 
